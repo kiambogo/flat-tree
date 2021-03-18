@@ -45,8 +45,10 @@ func Children(n uint64) (left uint64, right uint64, exists bool) {
 
 	depth := Depth(n)
 	offset := Offset(n) * 2
+	left = Index(depth-1, offset)
+	right = Index(depth-1, offset+1)
 
-	return Index(depth-1, offset), Index(depth-1, offset+1), true
+	return left, right, true
 }
 
 // LeftChild returns the left child of the provided node, if it exists
@@ -71,25 +73,30 @@ func RightChild(n uint64) (uint64, bool) {
 
 // Spans returns the left and right most nodes in the tree which the provided node spans
 func Spans(n uint64) (left uint64, right uint64) {
-	return LeftSpan(n), RightSpan(n)
+	if isEven(n) {
+		return n, n
+	}
+	depth := Depth(n)
+	offset := Offset(n)
+	left = offset * (2 << depth)
+	right = (offset+1)*(2<<depth) - 2
+	return
 }
 
 // LeftSpan returns the left most node in the tree which the provided node spans
 func LeftSpan(n uint64) uint64 {
-	depth := Depth(n)
-	if depth == 0 {
+	if isEven(n) {
 		return n
 	}
-	return Offset(n) * (2 << depth)
+	return Offset(n) * (2 << Depth(n))
 }
 
 // RightSpan returns the right most node in the tree which the provided node spans
 func RightSpan(n uint64) uint64 {
-	depth := Depth(n)
-	if depth == 0 {
+	if isEven(n) {
 		return n
 	}
-	return (Offset(n)+1)*(2<<depth) - 2
+	return (Offset(n)+1)*(2<<Depth(n)) - 2
 }
 
 // Count returns the number of nodes under the given node, including the provided node itself
