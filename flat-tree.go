@@ -92,6 +92,11 @@ func RightSpan(n uint64) uint64 {
 	return (Offset(n)+1)*(2<<depth) - 2
 }
 
+// Count returns the number of nodes under the given node, including the provided node itself
+func Count(n uint64) uint64 {
+	return (2 << Depth(n)) - 1
+}
+
 func isEven(n uint64) bool {
 	return n%2 == 0
 }

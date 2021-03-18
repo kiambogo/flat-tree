@@ -282,3 +282,28 @@ func Test_Spans(t *testing.T) {
 		assert.Equal(t, tc.expectedRight, right, "Spans of node %d with expected right value of %d; got %d", tc.node, tc.expectedRight, right)
 	}
 }
+
+func Test_Count(t *testing.T) {
+	t.Parallel()
+
+	testCases := []struct {
+		node, expected uint64
+	}{
+		{0, 1},
+		{1, 3},
+		{2, 1},
+		{3, 7},
+		{4, 1},
+		{5, 3},
+		{6, 1},
+		{7, 15},
+		{8, 1},
+		{23, 15},
+		{27, 7},
+	}
+
+	for _, tc := range testCases {
+		n := Count(tc.node)
+		assert.Equal(t, tc.expected, n, "Count of node %d with expected value of %d; got %d", tc.node, tc.expected, n)
+	}
+}
