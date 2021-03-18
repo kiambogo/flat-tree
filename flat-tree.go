@@ -21,6 +21,11 @@ func Offset(n uint64) uint64 {
 	return n >> (Depth(n) + 1)
 }
 
+// Parent returns the parent node of the provided node
+func Parent(n uint64) uint64 {
+	return Index(Depth(n)+1, Offset(n)/2)
+}
+
 func isEven(n uint64) bool {
 	return n%2 == 0
 }

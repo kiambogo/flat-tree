@@ -89,3 +89,31 @@ func Test_Offset(t *testing.T) {
 		assert.Equal(t, tc.expected, o, "Offset of %d with expected value of %d; got %d", tc.offset, tc.expected, o)
 	}
 }
+
+func Test_Parent(t *testing.T) {
+	t.Parallel()
+
+	testCases := []struct {
+		node, expected uint64
+	}{
+		{0, 1},
+		{2, 1},
+		{4, 5},
+		{6, 5},
+		{8, 9},
+		{10, 9},
+		{12, 13},
+		{14, 13},
+		{1, 3},
+		{5, 3},
+		{9, 11},
+		{13, 11},
+		{3, 7},
+		{11, 7},
+	}
+
+	for _, tc := range testCases {
+		o := Parent(tc.node)
+		assert.Equal(t, tc.expected, o, "Parent of %d with expected value of %d; got %d", tc.node, tc.expected, o)
+	}
+}
