@@ -117,3 +117,57 @@ func Test_Parent(t *testing.T) {
 		assert.Equal(t, tc.expected, o, "Parent of %d with expected value of %d; got %d", tc.node, tc.expected, o)
 	}
 }
+
+func Test_Sibling(t *testing.T) {
+	t.Parallel()
+
+	testCases := []struct {
+		node, expected uint64
+	}{
+		{0, 2},
+		{2, 0},
+		{4, 6},
+		{6, 4},
+		{8, 10},
+		{10, 8},
+		{12, 14},
+		{14, 12},
+		{1, 5},
+		{5, 1},
+		{9, 13},
+		{13, 9},
+		{3, 11},
+		{11, 3},
+	}
+
+	for _, tc := range testCases {
+		o := Sibling(tc.node)
+		assert.Equal(t, tc.expected, o, "Sibling of %d with expected value of %d; got %d", tc.node, tc.expected, o)
+	}
+}
+
+func Test_Uncle(t *testing.T) {
+	t.Parallel()
+
+	testCases := []struct {
+		node, expected uint64
+	}{
+		{0, 5},
+		{2, 5},
+		{4, 1},
+		{6, 1},
+		{8, 13},
+		{10, 13},
+		{12, 9},
+		{14, 9},
+		{1, 11},
+		{5, 11},
+		{9, 3},
+		{13, 3},
+	}
+
+	for _, tc := range testCases {
+		o := Uncle(tc.node)
+		assert.Equal(t, tc.expected, o, "Uncle of %d with expected value of %d; got %d", tc.node, tc.expected, o)
+	}
+}

@@ -26,6 +26,16 @@ func Parent(n uint64) uint64 {
 	return Index(Depth(n)+1, Offset(n)/2)
 }
 
+// Sibling returns the sibling of the provided node
+func Sibling(n uint64) uint64 {
+	return Index(Depth(n), Offset(n)^1)
+}
+
+// Uncle returns the parent's sibling of the provided node
+func Uncle(n uint64) uint64 {
+	return Index(Depth(n)+1, Offset(Parent(n))^1)
+}
+
 func isEven(n uint64) bool {
 	return n%2 == 0
 }
