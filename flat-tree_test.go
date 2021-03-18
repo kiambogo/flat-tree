@@ -171,3 +171,32 @@ func Test_Uncle(t *testing.T) {
 		assert.Equal(t, tc.expected, o, "Uncle of %d with expected value of %d; got %d", tc.node, tc.expected, o)
 	}
 }
+
+func Test_Children(t *testing.T) {
+	t.Parallel()
+
+	testCases := []struct {
+		node, expected1, expected2 uint64
+		expectedExists             bool
+	}{
+		{0, 0, 0, false},
+		{2, 0, 0, false},
+		{4, 0, 0, false},
+		{6, 0, 0, false},
+		{8, 0, 0, false},
+		{10, 0, 0, false},
+		{12, 0, 0, false},
+		{14, 0, 0, false},
+		{1, 0, 2, true},
+		{5, 4, 6, true},
+		{9, 8, 10, true},
+		{13, 12, 14, true},
+	}
+
+	for _, tc := range testCases {
+		c1, c2, exists := Children(tc.node)
+		assert.Equal(t, tc.expected1, c1, "Children of %d with expected left child of %d; got %d", tc.node, tc.expected1, c1)
+		assert.Equal(t, tc.expected2, c2, "Children of %d with expected right child of %d; got %d", tc.node, tc.expected2, c2)
+		assert.Equal(t, tc.expectedExists, exists, "Children of %d with expected exists of %d; got %d", tc.node, tc.expectedExists, exists)
+	}
+}

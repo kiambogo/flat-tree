@@ -36,6 +36,19 @@ func Uncle(n uint64) uint64 {
 	return Index(Depth(n)+1, Offset(Parent(n))^1)
 }
 
+// Children returns the children of the provided node
+// Returns the children and a bool indicating if they exist
+func Children(n uint64) (uint64, uint64, bool) {
+	if isEven(n) {
+		return 0, 0, false
+	}
+
+	depth := Depth(n)
+	offset := Offset(n) * 2
+
+	return Index(depth-1, offset), Index(depth-1, offset+1), true
+}
+
 func isEven(n uint64) bool {
 	return n%2 == 0
 }
