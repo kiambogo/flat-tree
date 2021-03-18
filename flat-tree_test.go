@@ -200,3 +200,59 @@ func Test_Children(t *testing.T) {
 		assert.Equal(t, tc.expectedExists, exists, "Children of %d with expected exists of %d; got %d", tc.node, tc.expectedExists, exists)
 	}
 }
+
+func Test_LeftChild(t *testing.T) {
+	t.Parallel()
+
+	testCases := []struct {
+		node, expected uint64
+		expectedExists bool
+	}{
+		{0, 0, false},
+		{2, 0, false},
+		{4, 0, false},
+		{6, 0, false},
+		{8, 0, false},
+		{10, 0, false},
+		{12, 0, false},
+		{14, 0, false},
+		{1, 0, true},
+		{5, 4, true},
+		{9, 8, true},
+		{13, 12, true},
+	}
+
+	for _, tc := range testCases {
+		child, exists := LeftChild(tc.node)
+		assert.Equal(t, tc.expected, child, "Left child of %d with expected value of %d; got %d", tc.node, tc.expected, child)
+		assert.Equal(t, tc.expectedExists, exists, "Left child of %d with expected exists of %d; got %d", tc.node, tc.expectedExists, exists)
+	}
+}
+
+func Test_RightChild(t *testing.T) {
+	t.Parallel()
+
+	testCases := []struct {
+		node, expected uint64
+		expectedExists bool
+	}{
+		{0, 0, false},
+		{2, 0, false},
+		{4, 0, false},
+		{6, 0, false},
+		{8, 0, false},
+		{10, 0, false},
+		{12, 0, false},
+		{14, 0, false},
+		{1, 2, true},
+		{5, 6, true},
+		{9, 10, true},
+		{13, 14, true},
+	}
+
+	for _, tc := range testCases {
+		child, exists := RightChild(tc.node)
+		assert.Equal(t, tc.expected, child, "Right child of %d with expected value of %d; got %d", tc.node, tc.expected, child)
+		assert.Equal(t, tc.expectedExists, exists, "Right child of %d with expected exists of %d; got %d", tc.node, tc.expectedExists, exists)
+	}
+}
