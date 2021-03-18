@@ -256,3 +256,29 @@ func Test_RightChild(t *testing.T) {
 		assert.Equal(t, tc.expectedExists, exists, "Right child of %d with expected exists of %d; got %d", tc.node, tc.expectedExists, exists)
 	}
 }
+
+func Test_Spans(t *testing.T) {
+	t.Parallel()
+
+	testCases := []struct {
+		node, expectedLeft, expectedRight uint64
+	}{
+		{0, 0, 0},
+		{1, 0, 2},
+		{2, 2, 2},
+		{3, 0, 6},
+		{4, 4, 4},
+		{5, 4, 6},
+		{6, 6, 6},
+		{7, 0, 14},
+		{8, 8, 8},
+		{23, 16, 30},
+		{27, 24, 30},
+	}
+
+	for _, tc := range testCases {
+		left, right := Spans(tc.node)
+		assert.Equal(t, tc.expectedLeft, left, "Spans of node %d with expected left value of %d; got %d", tc.node, tc.expectedLeft, left)
+		assert.Equal(t, tc.expectedRight, right, "Spans of node %d with expected right value of %d; got %d", tc.node, tc.expectedRight, right)
+	}
+}

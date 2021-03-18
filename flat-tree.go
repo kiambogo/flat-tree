@@ -69,6 +69,29 @@ func RightChild(n uint64) (uint64, bool) {
 	return Index(Depth(n)-1, (Offset(n)*2)+1), true
 }
 
+// Spans returns the left and right most nodes in the tree which the provided node spans
+func Spans(n uint64) (left uint64, right uint64) {
+	return LeftSpan(n), RightSpan(n)
+}
+
+// LeftSpan returns the left most node in the tree which the provided node spans
+func LeftSpan(n uint64) uint64 {
+	depth := Depth(n)
+	if depth == 0 {
+		return n
+	}
+	return Offset(n) * (2 << depth)
+}
+
+// RightSpan returns the right most node in the tree which the provided node spans
+func RightSpan(n uint64) uint64 {
+	depth := Depth(n)
+	if depth == 0 {
+		return n
+	}
+	return (Offset(n)+1)*(2<<depth) - 2
+}
+
 func isEven(n uint64) bool {
 	return n%2 == 0
 }
