@@ -62,3 +62,30 @@ func Test_Depth(t *testing.T) {
 		assert.Equal(t, tc.expected, d, "Depth of %d with expected value of %d; got %d", tc.depth, tc.expected, d)
 	}
 }
+
+func Test_Offset(t *testing.T) {
+	t.Parallel()
+
+	testCases := []struct {
+		offset, expected uint64
+	}{
+		{0, 0},
+		{1, 0},
+		{2, 1},
+		{3, 0},
+		{4, 2},
+		{5, 1},
+		{6, 3},
+		{7, 0},
+		{8, 4},
+		{9, 2},
+		{10, 5},
+		{11, 1},
+		{12, 6},
+	}
+
+	for _, tc := range testCases {
+		o := Offset(tc.offset)
+		assert.Equal(t, tc.expected, o, "Offset of %d with expected value of %d; got %d", tc.offset, tc.expected, o)
+	}
+}
