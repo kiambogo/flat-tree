@@ -1,6 +1,7 @@
 package flattree
 
 import (
+	"errors"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -305,5 +306,35 @@ func Test_Count(t *testing.T) {
 	for _, tc := range testCases {
 		n := Count(tc.node)
 		assert.Equal(t, tc.expected, n, "Count of node %d with expected value of %d; got %d", tc.node, tc.expected, n)
+	}
+}
+
+func Test_FullRoots(t *testing.T) {
+	t.Parallel()
+
+	testCases := []struct {
+		node        uint64
+		expected    []uint64
+		expectedErr error
+	}{
+		{0, []uint64{}, nil},
+		{2, []uint64{0}, nil},
+		{8, []uint64{3}, nil},
+		{16, []uint64{7}, nil},
+		{18, []uint64{7, 16}, nil},
+		{20, []uint64{7, 17}, nil},
+		{32, []uint64{15}, nil},
+		{36, []uint64{15, 33}, nil},
+		{3, []uint64{}, errors.New("odd index passed to FullRoots()")},
+	}
+
+	for _, tc := range testCases {
+		roots, err := FullRoots(tc.node)
+		assert.Equal(t, tc.expected, roots, "FullRoots of node %d with expected values of %d; got %d", tc.node, tc.expected, roots)
+		if tc.expectedErr == nil {
+			assert.NoError(t, err, "FullRoots of node %d with unexpected error of %d", tc.node, err)
+		} else {
+			assert.EqualError(t, err, tc.expectedErr.Error(), "FullRoots of node %d with expected error of %d, but no error received", tc.node, err)
+		}
 	}
 }
