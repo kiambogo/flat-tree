@@ -6,6 +6,8 @@ API for operating on a binary tree as an array.
 
 Adapted from https://github.com/datrs/flat-tree.
 
+Archived as code has been moved over to https://github.com/kiambogo/go-hypercore.
+
 ## Installation
 
 ``` sh
